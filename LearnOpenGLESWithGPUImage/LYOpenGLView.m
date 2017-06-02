@@ -201,9 +201,11 @@ const GLfloat kColorConversion601FullRange[] = {
 - (void)displayPixelBuffer:(CVPixelBufferRef)pixelBuffer
 {
     CVReturn err;
+    int frameWidth;
+    int frameHeight;
     if (pixelBuffer != NULL) {
-        int frameWidth = (int)CVPixelBufferGetWidth(pixelBuffer);
-        int frameHeight = (int)CVPixelBufferGetHeight(pixelBuffer);
+        frameWidth = (int)CVPixelBufferGetWidth(pixelBuffer);
+        frameHeight = (int)CVPixelBufferGetHeight(pixelBuffer);
         
         if (!_videoTextureCache) {
             NSLog(@"No video texture cache");
@@ -303,6 +305,7 @@ const GLfloat kColorConversion601FullRange[] = {
     // Set up the quad vertices with respect to the orientation and aspect ratio of the video.
     CGRect vertexSamplingRect = AVMakeRectWithAspectRatioInsideRect(CGSizeMake(_backingWidth, _backingHeight), self.layer.bounds);
     
+    
     // Compute normalized quad coordinates to draw the frame into.
     CGSize normalizedSamplingSize = CGSizeMake(0.0, 0.0);
     CGSize cropScaleAmount = CGSizeMake(vertexSamplingRect.size.width/self.layer.bounds.size.width, vertexSamplingRect.size.height/self.layer.bounds.size.height);
@@ -321,11 +324,12 @@ const GLfloat kColorConversion601FullRange[] = {
      The quad vertex data defines the region of 2D plane onto which we draw our pixel buffers.
      Vertex data formed using (-1,-1) and (1,1) as the bottom left and top right coordinates respectively, covers the entire screen.
      */
+    CGFloat wratio = (CGFloat)frameWidth / (((CGFloat)frameHeight/_backingHeight) * _backingWidth);
     GLfloat quadVertexData [] = {
-        -1 * normalizedSamplingSize.width, -1 * normalizedSamplingSize.height,
-        normalizedSamplingSize.width, -1 * normalizedSamplingSize.height,
-        -1 * normalizedSamplingSize.width, normalizedSamplingSize.height,
-        normalizedSamplingSize.width, normalizedSamplingSize.height,
+        -wratio * normalizedSamplingSize.width, -1 * normalizedSamplingSize.height,
+        wratio * normalizedSamplingSize.width, -1 * normalizedSamplingSize.height,
+        -wratio * normalizedSamplingSize.width, normalizedSamplingSize.height,
+        wratio * normalizedSamplingSize.width, normalizedSamplingSize.height,
     };
     
     // 更新顶点数据
@@ -377,7 +381,6 @@ const GLfloat kColorConversion601FullRange[] = {
     
     CGContextRelease(spriteContext);
     
-    
     glGenTextures(1, &_myPNGTexture);
     glBindTexture(GL_TEXTURE_2D, self.myPNGTexture);
     
@@ -402,7 +405,6 @@ const GLfloat kColorConversion601FullRange[] = {
 {
     GLuint vertShader, fragShader;
     NSURL *vertShaderURL, *fragShaderURL;
-    
     
     self.program = glCreateProgram();
     

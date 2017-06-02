@@ -28,7 +28,24 @@ void main()
     vec3 color;
     color = rgb;
     
-    vec4 bitmaodata = texture2D(SamplePNG, texCoordVarying);
+    vec2 sampleCoord = texCoordVarying;
+//    if (texCoordVarying.x < -1.0) {
+//        sampleCoord.x = -1.0;
+//    }
+//    
+//    if (texCoordVarying.x > 1.0) {
+//        sampleCoord.x = 1.0;
+//    }
+//    
+//    if (texCoordVarying.y < -1.0) {
+//        sampleCoord.y = -1.0;
+//    }
+//    
+//    if (texCoordVarying.y > 1.0) {
+//        sampleCoord.y = 1.0;
+//    }
+    
+    vec4 bitmaodata = texture2D(SamplePNG, sampleCoord);
 
     if(color.b-color.g>0.1 && color.b-color.r>0.1){
         color[0] = bitmaodata.r;
@@ -36,7 +53,7 @@ void main()
         color[2] = bitmaodata.b;
     }
     
-	gl_FragColor = vec4(color,1.0);
-//    gl_FragColor = bitmaodata;
+//	gl_FragColor = vec4(color,1.0);
+    gl_FragColor = bitmaodata;
 //    gl_FragColor = vec4(1, 0, 0, 1);
 }

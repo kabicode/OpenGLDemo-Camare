@@ -7,7 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		8E2BF84F1ED8109D0042BE25 /* for_test.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E2BF84E1ED8109D0042BE25 /* for_test.png */; };
+		8E2C41321EE10363009FEEEF /* IMG_2518.JPG in Resources */ = {isa = PBXBuildFile; fileRef = 8E2C41311EE10363009FEEEF /* IMG_2518.JPG */; };
+		8E2C41341EE15B2B009FEEEF /* for_test.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E2C41331EE15B2B009FEEEF /* for_test.png */; };
 		FD6BA4521D12CE440080EB2D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FD6BA4501D12CE440080EB2D /* Main.storyboard */; };
 		FD93DF7D1D4A29CC00E90AFB /* LYOpenGLView.m in Sources */ = {isa = PBXBuildFile; fileRef = FD93DF7C1D4A29CC00E90AFB /* LYOpenGLView.m */; };
 		FD93DF821D4A2B0A00E90AFB /* Shader.fsh in Resources */ = {isa = PBXBuildFile; fileRef = FD93DF801D4A2B0A00E90AFB /* Shader.fsh */; };
@@ -31,7 +32,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		8E2BF84E1ED8109D0042BE25 /* for_test.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = for_test.png; sourceTree = "<group>"; };
+		8E2C41311EE10363009FEEEF /* IMG_2518.JPG */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = IMG_2518.JPG; sourceTree = "<group>"; };
+		8E2C41331EE15B2B009FEEEF /* for_test.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = for_test.png; sourceTree = "<group>"; };
 		FD6BA4511D12CE440080EB2D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		FD93DF7B1D4A29CC00E90AFB /* LYOpenGLView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LYOpenGLView.h; sourceTree = "<group>"; };
 		FD93DF7C1D4A29CC00E90AFB /* LYOpenGLView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LYOpenGLView.m; sourceTree = "<group>"; };
@@ -79,7 +81,8 @@
 		FDAAD2451CE1CD7A00C7B6AC = {
 			isa = PBXGroup;
 			children = (
-				8E2BF84E1ED8109D0042BE25 /* for_test.png */,
+				8E2C41311EE10363009FEEEF /* IMG_2518.JPG */,
+				8E2C41331EE15B2B009FEEEF /* for_test.png */,
 				FDAAD2501CE1CD7A00C7B6AC /* LearnOpenGLESWithGPUImage */,
 				FDAAD26A1CE1CD7B00C7B6AC /* LearnOpenGLESWithGPUImageTests */,
 				FDAAD24F1CE1CD7A00C7B6AC /* Products */,
@@ -214,10 +217,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8E2C41341EE15B2B009FEEEF /* for_test.png in Resources */,
 				FD93DF821D4A2B0A00E90AFB /* Shader.fsh in Resources */,
-				8E2BF84F1ED8109D0042BE25 /* for_test.png in Resources */,
 				FDAAD2611CE1CD7A00C7B6AC /* LaunchScreen.storyboard in Resources */,
 				FDAAD25E1CE1CD7A00C7B6AC /* Assets.xcassets in Resources */,
+				8E2C41321EE10363009FEEEF /* IMG_2518.JPG in Resources */,
 				FD6BA4521D12CE440080EB2D /* Main.storyboard in Resources */,
 				FD93DF831D4A2B0A00E90AFB /* Shader.vsh in Resources */,
 			);
