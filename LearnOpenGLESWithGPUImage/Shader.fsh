@@ -7,6 +7,7 @@
 //
 
 varying highp vec2 texCoordVarying;
+varying highp vec2 sampleCoordVarying;
 precision mediump float;
 
 uniform sampler2D SamplerY;
@@ -45,7 +46,7 @@ void main()
 //        sampleCoord.y = 1.0;
 //    }
     
-    vec4 bitmaodata = texture2D(SamplePNG, sampleCoord);
+    vec4 bitmaodata = texture2D(SamplePNG, sampleCoordVarying);
 
     if(color.b-color.g>0.1 && color.b-color.r>0.1){
         color[0] = bitmaodata.r;
@@ -53,7 +54,7 @@ void main()
         color[2] = bitmaodata.b;
     }
     
-//	gl_FragColor = vec4(color,1.0);
-    gl_FragColor = bitmaodata;
+	gl_FragColor = vec4(color,1.0);
+//    gl_FragColor = bitmaodata;
 //    gl_FragColor = vec4(1, 0, 0, 1);
 }

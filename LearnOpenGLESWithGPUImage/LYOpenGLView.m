@@ -28,7 +28,8 @@ enum
 {
     ATTRIB_VERTEX,
     ATTRIB_TEXCOORD,
-    NUM_ATTRIBUTES
+    NUM_ATTRIBUTES,
+    ATTRIB_SAMPLECOORD
 };
 
 // Color Conversion Constants (YUV to RGB) including adjustment from 16-235/16-240 (video range)
@@ -154,6 +155,9 @@ const GLfloat kColorConversion601FullRange[] = {
     
     glEnableVertexAttribArray(ATTRIB_TEXCOORD);
     glVertexAttribPointer(ATTRIB_TEXCOORD, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(GLfloat), 0);
+    
+    glEnableVertexAttribArray(ATTRIB_SAMPLECOORD);
+    glVertexAttribPointer(ATTRIB_SAMPLECOORD, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(GLfloat), 0);
     
     glGenFramebuffers(1, &_frameBufferHandle);
     glBindFramebuffer(GL_FRAMEBUFFER, _frameBufferHandle);
@@ -324,7 +328,8 @@ const GLfloat kColorConversion601FullRange[] = {
      The quad vertex data defines the region of 2D plane onto which we draw our pixel buffers.
      Vertex data formed using (-1,-1) and (1,1) as the bottom left and top right coordinates respectively, covers the entire screen.
      */
-    CGFloat wratio = (CGFloat)frameWidth / (((CGFloat)frameHeight/_backingHeight) * _backingWidth);
+//    CGFloat wratio = (CGFloat)frameWidth / (((CGFloat)frameHeight/_backingHeight) * _backingWidth);
+    CGFloat wratio = 1.0;
     GLfloat quadVertexData [] = {
         -wratio * normalizedSamplingSize.width, -1 * normalizedSamplingSize.height,
         wratio * normalizedSamplingSize.width, -1 * normalizedSamplingSize.height,
@@ -336,15 +341,27 @@ const GLfloat kColorConversion601FullRange[] = {
     glVertexAttribPointer(ATTRIB_VERTEX, 2, GL_FLOAT, 0, 0, quadVertexData);
     glEnableVertexAttribArray(ATTRIB_VERTEX);
     
+    CGFloat ratio = (((CGFloat)frameHeight/_backingHeight) * _backingWidth) / (CGFloat)frameWidth;
+    CGFloat xPoint = 1 - ((1 - ratio)/2.0);
     GLfloat quadTextureData[] =  { // 正常坐标
+        xPoint, 0,
+        1 - xPoint, 0,
+        xPoint, 1,
+        1 - xPoint, 1
+    };
+    
+    glVertexAttribPointer(ATTRIB_TEXCOORD, 2, GL_FLOAT, 0, 0, quadTextureData);
+    glEnableVertexAttribArray(ATTRIB_TEXCOORD);
+    
+    GLfloat sampleTextureData[] =  { // 正常坐标
         1, 0,
         0, 0,
         1, 1,
         0, 1
     };
     
-    glVertexAttribPointer(ATTRIB_TEXCOORD, 2, GL_FLOAT, 0, 0, quadTextureData);
-    glEnableVertexAttribArray(ATTRIB_TEXCOORD);
+    glVertexAttribPointer(ATTRIB_SAMPLECOORD, 2, GL_FLOAT, 0, 0, sampleTextureData);
+    glEnableVertexAttribArray(ATTRIB_SAMPLECOORD);
     
     glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
     
@@ -431,6 +448,7 @@ const GLfloat kColorConversion601FullRange[] = {
     // Bind attribute locations. This needs to be done prior to linking.
     glBindAttribLocation(self.program, ATTRIB_VERTEX, "position");
     glBindAttribLocation(self.program, ATTRIB_TEXCOORD, "texCoord");
+    glBindAttribLocation(self.program, ATTRIB_SAMPLECOORD, "sampleCoord");
     
     // Link the program.
     if (![self linkProgram:self.program]) {
